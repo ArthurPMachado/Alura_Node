@@ -1,6 +1,32 @@
+const express = require('express');
+const app = express();
+
+app.listen(3000, () => {
+    console.log('Servidor rodando na porta 3000');
+});
+
+app.get('/', (req, resp) => {
+    resp.send(
+        `
+            <html>
+                <head>
+                    <meta charset="utf-8">
+                </head>
+                <body>
+                    <h1> Casa do Código </h1>
+                </body> 
+            </html>
+        `
+    );
+});
+
+
+
+/* 
 const http = require('http');
-// import {createServer} from 'http' - ES6
+import {createServer} from 'http' - ES6
 // código http.createServer passa a ser apenas createServer
+
 
 const servidor = http.createServer((req, resp) => {
     let html = '';
@@ -32,7 +58,5 @@ const servidor = http.createServer((req, resp) => {
 });
 
 servidor.listen(3000);
+*/
 
-function newFunction() {
-    return require('http');
-}
