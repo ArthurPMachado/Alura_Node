@@ -1,5 +1,8 @@
-module.exports = (app) => {
-    app.get('/', (req, resp) => {
+const db = require('../../config/database');
+const LivroDao = require('../infra/livro_dao');
+
+module.exports = function (app) {
+    app.get('/', function (req, resp) {
         resp.send(
             `
                 <html>
@@ -13,23 +16,29 @@ module.exports = (app) => {
             `
         );
     });
-    app.get('/livros', (req, resp) => {
-        resp.marko(
-            require('../views/livros/lista/lista.marko'),
-            {
-                livros : [
-                    {
-                        id: 1,
-                        titulo: 'Fundamentos do Node'
-                    },
-                    {
-                        id: 2,
-                        titulo: 'Node avançado'
-                    }
-                ]
-            }
-        );
+    app.get('/livros', function (req, resp) {
+
+        const livroDao = new LivroDao(db);
+
+        livroDao.lista((erro, resultados) => {
+            resp.marko(
+                require('../views/livros/lista/lista.marko'),
+                {
+                    livros: resultados
+                }
+            );
+        });
+
+        /*
+        db.all('SELECT * FROM LIVROS', (erro, resultados) => {
+            
+            resp.marko(
+                require('../views/livros/lista/lista.marko'),
+                {
+                    livros : resultados
+                }
+            );
+        });
+        */
     });
-};
-
-
+}
