@@ -14,17 +14,20 @@ module.exports = (app) => {
         );
     });
     app.get('/livros', (req, resp) => {
-        resp.send(
-            `
-                <html>
-                    <head>
-                        <meta charset="utf-8">
-                    </head>
-                    <body>
-                        <h1> Listagem de Livros </h1>
-                    </body> 
-                </html>
-            `
+        resp.marko(
+            require('../views/livros/lista/lista.marko'),
+            {
+                livros : [
+                    {
+                        id: 1,
+                        titulo: 'Fundamentos do Node'
+                    },
+                    {
+                        id: 2,
+                        titulo: 'Node avançado'
+                    }
+                ]
+            }
         );
     });
 };
