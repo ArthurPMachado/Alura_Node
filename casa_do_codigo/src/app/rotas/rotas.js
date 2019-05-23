@@ -19,7 +19,6 @@ module.exports = function (app) {
     app.get('/livros', function (req, resp) {
 
         const livroDao = new LivroDao(db);
-
         livroDao.lista()
                 .then(livros => resp.marko(
                     require('../views/livros/lista/lista.marko'),
@@ -28,17 +27,17 @@ module.exports = function (app) {
                     }
                 ))
                 .catch(erro => console.log(erro));
+    });
 
-        /*
-        db.all('SELECT * FROM LIVROS', (erro, resultados) => {
-            
-            resp.marko(
-                require('../views/livros/lista/lista.marko'),
-                {
-                    livros : resultados
-                }
-            );
-        });
-        */
+    app.get('/livros/form', function(req, resp) {
+        resp.marko(require('../views/livros/form/form.marko'));
+    });
+
+    app.post('/livros', function(req, resp){
+        console.log(req.body);
+        const livroDao = new LivroDao(db);
+        livroDao.adiciona(req.body)
+                .then(????)
+                .catch(erro => console.log(erro));
     });
 }
