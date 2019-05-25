@@ -37,7 +37,13 @@ module.exports = function (app) {
         console.log(req.body);
         const livroDao = new LivroDao(db);
         livroDao.adiciona(req.body)
-                .then(????)
+                .then(resp.redirect('/livros'))
                 .catch(erro => console.log(erro));
     });
+
+    // app.get('/livros', function(req, resp){
+    //     const LivroDao = new LivroDao(db);
+    //     livroDao.buscaPorId(req.body)
+    //             .then(resp.redir)
+    // });
 }
